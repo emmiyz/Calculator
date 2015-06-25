@@ -1,63 +1,55 @@
-(function(){
-	'use strict'
-
-	$(document).ready(function(){
-		
-		var displayValue = "0";
-		$("#calculator .btn").click(function(){
-			var btnValue = $(this).data("value");
-			if (btnValue === "=") {
-				updateDisplay(processAnswer(), true);
-
-			}  else if (btnValue === "reset"){
-				updateDisplay("0", true);
-
-			} else {
-				if (btnValue === "+" ||
-					btnValue === "-" ||
-					btnValue === "*" ||
-					btnValue === "/" ){
-					if ((displayValue[displayValue.length-1] === "+") ||
-						(displayValue[displayValue.length-1] === "-") ||
-						(displayValue[displayValue.length-1] === "*") ||
-						(displayValue[displayValue.length-1] === "/") ){
-						displayValue = displayValue.substr(0,displayValue.length-1);
-					}
+$(document).ready(function(){
+	var displayValue = "0";
+	$('.btn').click(function(){
+		var btnValue = $(this).data('value');
+		if (btnValue === "=") {
+			updateDisplay(processAnswer(), true);
+		}else if(btnValue === "reset"){
+			updateDisplay("0", true);
+		}else{
+			if (btnValue === "+" || 
+			    btnValue === "-" ||
+			    btnValue === "*" ||
+			    btnValue === "/"){
+			   	if ((displayValue[displayValue.length-1] === "+") ||
+					(displayValue[displayValue.length-1] === "-") ||
+					(displayValue[displayValue.length-1] === "*") ||
+					(displayValue[displayValue.length-1] === "/")) {
+					displayValue = displayValue.substr(0, displayValue.length - 1);
 				}
-				updateDisplay(btnValue, false);
 			}
-		});
-
-		var processAnswer = function(){
-			try{
-				var result = eval(displayValue); 
-				return result;
-
-			}catch(e) {
-				return "Error";
-			}	
-		};
-
-		var updateDisplay = function(value, overwrite){
-			displayValue = displayValue.toString();
-			if (overwrite === true) {
-				displayValue = value
-
-			} else {
-				if (displayValue == "0" ||
-					displayValue == "+" ||
-					displayValue == "*" ||
-					displayValue == "/" ||
-					displayValue == "Error" ||
-					displayValue == "Infinity"){
-					displayValue = value;
-				} else {
-				displayValue += value;
-			}
-
-			}
-			$("#calculator .display").text(displayValue);
-		};
-
+			updateDisplay(btnValue, false)
+		}
 	});
-})();
+
+	var processAnswer = function(){
+		try{
+			var result = eval(displayValue);
+			return result;
+		}catch(e){
+			return "Error";
+		}
+		
+	}
+
+	var updateDisplay = function(value, overwrite){
+		displayValue = displayValue.toString();
+		if (overwrite === true){
+			displayValue = value;
+		}else{
+			if(displayValue == "0" ||
+			   displayValue == "+" ||
+			   displayValue == "*" ||
+			   displayValue == "/" ||
+			   displayValue == "Error" ||
+			   displayValue == "Infinity"){
+				displayValue = value;
+			}else{
+			displayValue += value;
+		}
+
+		}
+		$('.display').text(displayValue);
+	};
+
+});
